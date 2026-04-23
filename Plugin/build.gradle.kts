@@ -2,7 +2,7 @@ group = "de.corneliusmay.silkspawners"
 version = "2.3.3"
 
 plugins {
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("com.gradleup.shadow") version "9.4.1"
 }
 
 var bukkit = "org.bukkit:bukkit:1.15.2-R0.1-SNAPSHOT"

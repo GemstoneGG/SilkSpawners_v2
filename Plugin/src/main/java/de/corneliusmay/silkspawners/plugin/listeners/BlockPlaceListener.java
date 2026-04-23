@@ -29,8 +29,10 @@ public class BlockPlaceListener extends SilkSpawnersListener<BlockPlaceEvent> {
 
         Player p = e.getPlayer();
 
-        ItemStack[] itemsInHand = plugin.getBukkitHandler().getItemsInHand(p);
-        Spawner spawner = new Spawner(plugin, itemIsSpawner(itemsInHand));
+        ItemStack placedItem = e.getItemInHand();
+        if(placedItem.getType() != plugin.getBukkitHandler().getSpawnerMaterial()) return;
+
+        Spawner spawner = new Spawner(plugin, placedItem);
         if(!spawner.isValid()) return;
 
         if(!p.hasPermission("silkspawners.place." + spawner.serializedEntityType())
@@ -50,16 +52,5 @@ public class BlockPlaceListener extends SilkSpawnersListener<BlockPlaceEvent> {
         }
         this.editedSpawners.add(e.getBlock());
         event.getSpawner().setSpawnerBlockType(e.getBlock(), this.editedSpawners);
-    }
-
-    private ItemStack itemIsSpawner(ItemStack[] items) {
-        return itemIsSpawner(items, 0);
-    }
-
-    private ItemStack itemIsSpawner(ItemStack[] items, int i) {
-        if(items.length == i) return null;
-
-        if(items[i].getType() == plugin.getBukkitHandler().getSpawnerMaterial()) return items[i];
-        else return itemIsSpawner(items, i + 1);
     }
 }
